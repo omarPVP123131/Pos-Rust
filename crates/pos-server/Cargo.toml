@@ -1,0 +1,11 @@
+[package]
+name = "pos-server"
+version = "0.1.0"
+edition = "2021"
+description = "Servidor LAN del punto de venta: expone PosApi como JSON sin dependencias externas."
+
+[dependencies]
+pos-db = { path = "../pos-db" }
+serde_json = "1"
+pos-core = { path = "../pos-core" }
+pos-api = { path = "../pos-api" }

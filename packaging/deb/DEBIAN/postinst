@@ -1,0 +1,59 @@
+#!/bin/sh
+set -e
+
+# --- permisos para la impresora termica y el cajón de dinero ---------------
+# Sin esto, el cajero tendría que ser root para imprimir. Las reglas udev dan
+# acceso al grupo "lp" (USB clase impresora, usbmisc) y "dialout" (serie).
+# TAG uaccess: el usuario sentado en consola también puede escribir aunque
+# todavía no haya cerrado sesión tras el usermod.
+if [ -d /etc/udev/rules.d ]; then
+    cat > /etc/udev/rules.d/99-pos-impresora.rules <<'UDEV'
+# Punto de venta — acceso a impresoras térmicas sin driver.
+# El ticket se manda ESC/POS directo. No hace falta CUPS.
+SUBSYSTEM=="usbmisc", KERNEL=="lp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+KERNEL=="lp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+KERNEL=="usblp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+KERNEL=="ttyUSB*", MODE="0660", GROUP="dialout", TAG+="uaccess"
+KERNEL=="ttyACM*", MODE="0660", GROUP="dialout", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{bInterfaceClass}=="07", GROUP="lp", MODE="0664", TAG+="uaccess"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", GROUP="dialout", MODE="0664", TAG+="uaccess"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", GROUP="dialout", MODE="0664", TAG+="uaccess"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", GROUP="dialout", MODE="0664", TAG+="uaccess"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", GROUP="dialout", MODE="0664", TAG+="uaccess"
+UDEV
+    if command -v udevadm >/dev/null 2>&1; then
+        udevadm control --reload-rules || true
+        udevadm trigger || true
+    fi
+fi
+
+# El que instala (y los usuarios de /home) entran a los dos grupos: "lp" para
+# las impresoras USB y "dialout" para los adaptadores serie.
+for g in lp dialout; do
+    getent group "$g" >/dev/null 2>&1 || continue
+    for u in $(ls /home 2>/dev/null); do
+        if id "$u" >/dev/null 2>&1; then
+            usermod -a -G "$g" "$u" 2>/dev/null || true
+        fi
+    done
+    if [ -n "$SUDO_USER" ] && id "$SUDO_USER" >/dev/null 2>&1; then
+        usermod -a -G "$g" "$SUDO_USER" 2>/dev/null || true
+    fi
+done
+
+chmod 755 /usr/bin/pos
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database -q /usr/share/applications || true
+fi
+if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+    gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor || true
+fi
+
+echo ""
+echo "  Punto de Venta instalado."
+echo "  Se abrió el acceso a impresoras USB (lp, usbmisc) y adaptadores serie (dialout)."
+echo "  Para ver la impresora:  pos --impresoras"
+echo "  Para probarla:          pos --probar-impresion"
+echo "  Si no imprime, cierra sesión y vuelve a entrar (los grupos se aplican al entrar)."
+echo "  Para arrancar: pos   (o búscalo en el menú)"
+echo ""

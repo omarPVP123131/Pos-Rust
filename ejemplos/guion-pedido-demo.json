@@ -1,0 +1,58 @@
+{
+  "nombre": "Proveedor y pedido de demo",
+  "detener_al_fallar": true,
+  "pasos": [
+    {
+      "descripcion": "Entrar como admin",
+      "comando": { "Login": { "username": "admin", "pin": "1234" } }
+    },
+    {
+      "descripcion": "Dar de alta al proveedor Bimbo",
+      "comando": {
+        "GuardarProveedor": {
+          "proveedor": {
+            "id": null,
+            "name": "Bimbo",
+            "phone": "555 987 6543",
+            "nota": "Pan y galletas"
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Crear el pedido P-000001",
+      "comando": {
+        "NuevoPedido": {
+          "proveedor_id": 1,
+          "nota": "Pedido semanal"
+        }
+      }
+    },
+    {
+      "descripcion": "Agregar Coca-Cola al pedido",
+      "comando": {
+        "AgregarAPedido": {
+          "pedido_id": 1,
+          "codigo": "7501",
+          "qty_millis": 24000,
+          "costo_cents": 1200
+        }
+      }
+    },
+    {
+      "descripcion": "Agregar café al pedido",
+      "comando": {
+        "AgregarAPedido": {
+          "pedido_id": 1,
+          "codigo": "7509",
+          "qty_millis": 5000,
+          "costo_cents": 6500
+        }
+      }
+    },
+    {
+      "descripcion": "Salir",
+      "comando": "Salir"
+    }
+  ]
+}

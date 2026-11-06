@@ -1,0 +1,107 @@
+# ============================================================
+# Rust / compilación
+# ============================================================
+/target/
+**/target/
+**/incremental/
+*.rs.bk
+*.pdb
+*.profraw
+*.profdata
+*.rlib
+*.rmeta
+
+# ============================================================
+# Binarios y artefactos de empaquetado
+# ============================================================
+*.exe
+*.dll
+*.so
+*.dylib
+*.lib
+*.o
+*.obj
+*.msi
+*.deb
+*.AppImage
+*.rpm
+*.tar.gz
+*.zip
+packaging/deb/usr/bin/pos
+packaging/windows/*.exe
+
+# ============================================================
+# Bases de datos y respaldos locales
+# ============================================================
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.dump
+*.bak
+**/respaldos/
+respaldos/
+
+# ============================================================
+# Secretos y llaves
+# ¡La llave privada de firma NUNCA se sube!
+# ============================================================
+crates/pos-update/llaves/pos-privada.txt
+*.pem
+*.key
+*.pfx
+*.p12
+*.csr
+.env
+.env.*
+*.secret
+secrets.*
+
+# ============================================================
+# Logs y temporales
+# ============================================================
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.orig
+*.rej
+*.stackdump
+*.dmp
+*.etl
+
+# ============================================================
+# Artefactos generados por pruebas y capturas
+# ============================================================
+capturas/
+crates/pos-ui/tests/snapshots/*.new.png
+crates/pos-ui/tests/snapshots/*.old.png
+crates/pos-ui/tests/snapshots/*.diff.png
+
+# ============================================================
+# Sistema operativo
+# ============================================================
+Thumbs.db
+Desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# ============================================================
+# Editores / IDEs
+# ============================================================
+.vscode/
+.idea/
+.vs/
+*.suo
+*.user
+*.code-workspace
+
+# ============================================================
+# Herramientas locales (opencode, node)
+# ============================================================
+.opencode/
+!/.opencode/.gitignore
+node_modules/

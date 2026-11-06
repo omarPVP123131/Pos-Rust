@@ -1,0 +1,18 @@
+Package: punto-de-venta
+Version: 0.6.2
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Equipo del punto de venta <soporte@mitienda.mx>
+Homepage: https://mitienda.mx
+Description: Punto de venta para tiendas de abarrotes y retail
+ Cobra, imprime tickets térmicos y corta caja en computadoras modestas
+ (Celeron con 1 GB de RAM). Funciona sin internet y guarda todo en una
+ base SQLite local.
+ .
+ Incluye: venta con pago mixto, descuentos con autorizacion de supervisor,
+ cartera de clientes (fiados), corte de caja con arqueo, catalogo con
+ importacion por CSV, inventario, reportes y respaldo.
+ .
+ Despues de instalar, el programa queda en /usr/bin/pos y se abre desde el
+ menu "Punto de Venta".

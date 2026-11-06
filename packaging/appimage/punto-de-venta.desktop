@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Punto de Venta
+Comment=Cobrar, imprimir tickets y cortar caja
+Exec=pos
+Icon=punto-de-venta
+Terminal=false
+Categories=Office;Finance;Utility;

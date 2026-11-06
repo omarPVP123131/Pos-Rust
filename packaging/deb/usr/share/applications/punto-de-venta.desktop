@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Punto de Venta
+GenericName=Punto de venta
+Comment=Cobrar, imprimir tickets y cortar caja
+Exec=/usr/bin/pos
+Icon=punto-de-venta
+Terminal=false
+Categories=Office;Finance;Utility;
+Keywords=caja;ventas;ticket;abarrotes;inventario;
+StartupNotify=true

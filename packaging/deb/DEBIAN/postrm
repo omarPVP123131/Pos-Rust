@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "$1" = "purge" ]; then
+    rm -f /etc/udev/rules.d/99-pos-impresora.rules
+    udevadm control --reload-rules 2>/dev/null || true
+fi

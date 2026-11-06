@@ -1,0 +1,33 @@
+// Al subir de versión, cambia 0,6,2,0 y "0.6.2" junto con VERSION en
+// packaging/construir-windows.ps1 y pos-update::VERSION.
+#define IDI_ICON1 1
+IDI_ICON1 ICON "../iconos/punto-de-venta.ico"
+1 24 "app.manifest"
+
+1 VERSIONINFO
+FILEVERSION 0,6,2,0
+PRODUCTVERSION 0,6,2,0
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x40004L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Punto de Venta"
+            VALUE "FileDescription", "Punto de Venta - caja para retail"
+            VALUE "FileVersion", "0.6.2"
+            VALUE "InternalName", "pos"
+            VALUE "OriginalFilename", "pos.exe"
+            VALUE "ProductName", "Punto de Venta"
+            VALUE "ProductVersion", "0.6.2"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

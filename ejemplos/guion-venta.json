@@ -1,0 +1,94 @@
+{
+  "nombre": "Venta de humo (headless)",
+  "reporte": "capturas/automatizacion/guion-venta-reporte.json",
+  "detener_al_fallar": true,
+  "pasos": [
+    {
+      "descripcion": "Entrar como admin",
+      "comando": {
+        "Login": {
+          "username": "admin",
+          "pin": "1234"
+        }
+      }
+    },
+    {
+      "descripcion": "Ver el estado inicial de la caja",
+      "comando": "EstadoCaja"
+    },
+    {
+      "descripcion": "Abrir caja con $100 de fondo",
+      "comando": {
+        "AbrirCaja": {
+          "fondo_cents": 10000
+        }
+      }
+    },
+    {
+      "descripcion": "Buscar el producto de prueba",
+      "comando": {
+        "BuscarProductos": {
+          "termino": "Aceite",
+          "limite": 5
+        }
+      }
+    },
+    {
+      "descripcion": "Cobrar una pieza de Aceite 1-2-3 1 L",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7501",
+                "descripcion": "Aceite 1-2-3 1 L",
+                "qty_millis": 1000,
+                "precio_cents": 4200,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              {
+                "metodo": "efectivo",
+                "monto_cents": 4200,
+                "recibido_cents": 5000
+              }
+            ],
+            "cliente_id": null,
+            "nota": "Venta de humo automatizada",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Confirmar que la venta quedó registrada",
+      "comando": {
+        "VentasRecientes": {
+          "limite": 3
+        }
+      }
+    },
+    {
+      "descripcion": "Ver la caja después de la venta",
+      "comando": "EstadoCaja"
+    },
+    {
+      "descripcion": "Cerrar la caja (arqueo vacío)",
+      "comando": {
+        "CerrarCaja": {
+          "piezas": [],
+          "supervisor": {
+            "username": "admin",
+            "pin": "1234"
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Salir",
+      "comando": "Salir"
+    }
+  ]
+}

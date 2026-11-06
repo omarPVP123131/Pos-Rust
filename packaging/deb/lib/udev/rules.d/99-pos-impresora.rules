@@ -1,0 +1,16 @@
+# Punto de venta — acceso a impresoras térmicas sin driver.
+# El ticket se manda ESC/POS directo. No hace falta CUPS.
+#
+# lp     = /dev/usb/lp*  (clase USB 07, subsistema usbmisc)
+# dialout = adaptadores USB-serie (CH340, FTDI, CP210x, Prolific)
+# TAG uaccess = el usuario sentado en consola también puede escribir
+#               aunque todavía no haya cerrado sesión tras el usermod.
+
+# Impresoras USB de clase impresora: el nodo vive en usbmisc.
+SUBSYSTEM=="usbmisc", KERNEL=="lp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+KERNEL=="lp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+KERNEL=="usblp*", MODE="0660", GROUP="lp", TAG+="uaccess"
+
+# Adaptadores USB-serie que algunas térmicas chinas usan.
+KERNEL=="ttyUSB*", MODE="0660", GROUP="dialout", TAG+="uaccess"
+KERNEL=="ttyACM*", MODE="0660", GROUP="dialout", TAG+="uaccess"

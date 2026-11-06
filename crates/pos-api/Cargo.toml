@@ -1,0 +1,17 @@
+[package]
+name = "pos-api"
+version = "0.1.0"
+edition = "2021"
+description = "Servicios del punto de venta expuestos como una sola API, sin importar quién la consuma (egui, móvil, CLI)."
+
+[dependencies]
+pos-core = { path = "../pos-core" }
+pos-db = { path = "../pos-db" }
+pos-hw = { path = "../pos-hw" }
+pos-fiscal = { path = "../pos-fiscal" }
+pos-update = { path = "../pos-update" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+tempfile = "3"

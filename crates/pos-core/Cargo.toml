@@ -1,0 +1,9 @@
+[package]
+name = "pos-core"
+version = "0.1.0"
+edition = "2021"
+description = "Dominio puro del punto de venta: dinero, impuestos, ventas y pagos. Cero dependencias."
+license = "MIT"
+
+[dependencies]
+# Ninguna a propósito: este crate debe compilar en milisegundos y ser 100% testeable.

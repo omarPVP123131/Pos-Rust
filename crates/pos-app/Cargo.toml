@@ -1,0 +1,32 @@
+[package]
+name = "pos-app"
+version = "0.1.0"
+edition = "2021"
+description = "Ejecutable del punto de venta."
+
+[dependencies]
+pos-api = { path = "../pos-api" }
+pos-core = { path = "../pos-core" }
+pos-db = { path = "../pos-db" }
+pos-update = { path = "../pos-update" }
+pos-server = { path = "../pos-server" }
+pos-hw = { path = "../pos-hw" }
+pos-ui = { path = "../pos-ui" }
+serde_json = "1"
+eframe = { version = "0.31", default-features = false, features = [
+    "glow",
+    "default_fonts",
+] }
+
+[target.'cfg(unix)'.dependencies]
+eframe = { version = "0.31", default-features = false, features = [
+    "glow",
+    "x11",
+    "wayland",
+    "accesskit",
+    "default_fonts",
+] }
+
+[[bin]]
+name = "pos"
+path = "src/main.rs"

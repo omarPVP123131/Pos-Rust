@@ -1,0 +1,9 @@
+# Compilación cruzada a Windows desde Linux.
+#
+# El programa corre en Windows sin cambios de plataforma en el código de
+# negocio: todo lo que cambia (impresión por spooler, nombres de archivos) está
+# detrás de `cfg(windows)` en `pos-hw`. Estas dos líneas sólo le dicen a cargo
+# con qué enlazar.
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw32-gcc"
+ar = "x86_64-w64-mingw32-ar"

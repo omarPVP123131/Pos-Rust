@@ -1,0 +1,27 @@
+{
+  "nombre": "Preparar caja para el demo de interfaz",
+  "detener_al_fallar": true,
+  "pasos": [
+    {
+      "descripcion": "Entrar como admin",
+      "comando": {
+        "Login": {
+          "username": "admin",
+          "pin": "1234"
+        }
+      }
+    },
+    {
+      "descripcion": "Abrir caja con $500 de fondo",
+      "comando": {
+        "AbrirCaja": {
+          "fondo_cents": 50000
+        }
+      }
+    },
+    {
+      "descripcion": "Salir",
+      "comando": "Salir"
+    }
+  ]
+}

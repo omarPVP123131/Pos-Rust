@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+# No borramos la base de datos: ahi estan las ventas del negocio.
+echo "  Tus datos quedan en ~/.local/share/punto-de-venta/"

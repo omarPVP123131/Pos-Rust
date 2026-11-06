@@ -1,0 +1,19 @@
+[package]
+name = "pos-hw"
+version = "0.1.0"
+edition = "2021"
+description = "Impresoras térmicas ESC/POS, cajón de dinero y periféricos."
+license = "MIT"
+
+[dependencies]
+pos-core = { path = "../pos-core" }
+
+[target.'cfg(unix)'.dependencies]
+# Sólo para configurar el puerto serie (termios). Sale gratis: libc ya venía
+# en el árbol de dependencias y no pesa nada en el binario.
+libc = "0.2"
+
+[features]
+default = []
+# Impresión USB con libusb (se activa cuando se compile en la máquina destino).
+# usb = ["rusb"]

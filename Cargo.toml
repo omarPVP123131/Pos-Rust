@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pos-fiscal",
+    "crates/pos-core",
+    "crates/pos-api",
+    "crates/pos-server",
+    "crates/pos-db",
+    "crates/pos-update",
+    "crates/pos-hw",
+    "crates/pos-ui",
+    "crates/pos-app",
+]
+# `cargo run` sin `-p` abre la caja (no el firmador): en Windows el README
+# dice `cargo run` a secas y antes pedía `--bin` por haber dos binarios.
+default-members = ["crates/pos-app"]
+
+# Perfil pensado para equipos de gama baja: binario pequeño, arranque rápido.
+[profile.release]
+opt-level = "z"      # optimizar a tamaño: menos bytes que leer de un HDD lento
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+# El perfil de desarrollo mantiene depuración rápida (sin LTO).
+[profile.dev]
+opt-level = 1

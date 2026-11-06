@@ -1,0 +1,40 @@
+[package]
+name = "pos-ui"
+version = "0.1.0"
+edition = "2021"
+description = "Interfaz de mostrador en egui: venta, catálogo, reportes y configuración."
+
+[dependencies]
+pos-core = { path = "../pos-core" }
+pos-api = { path = "../pos-api" }
+pos-hw = { path = "../pos-hw" }
+
+# egui renderiza con OpenGL, no con WebView: cabe en 1 GB de RAM.
+# AccessKit en Windows (UIA) se ha llevado el proceso al pasar del login
+# a la venta: el árbol de accesibilidad se reconstruye y aborta. En Linux
+# las pruebas de interfaz lo necesitan; en Windows no se enlaza.
+eframe = { version = "0.31", default-features = false, features = [
+    "glow",
+    "default_fonts",
+] }
+
+egui = "0.31"
+# Miniaturas JPEG de los productos estrella: 96 px, sin PNG inflado.
+image = { version = "0.25", default-features = false, features = ["jpeg"] }
+
+[target.'cfg(unix)'.dependencies]
+eframe = { version = "0.31", default-features = false, features = [
+    "glow",
+    "x11",
+    "wayland",
+    "accesskit",
+    "default_fonts",
+] }
+
+[target.'cfg(unix)'.dev-dependencies]
+# Pruebas de la interfaz: encuentra los botones por su nombre (AccessKit) y
+# puede renderizar la pantalla a un PNG. Sólo en Unix: en Windows el arnés
+# (wgpu + AccessKit/UIA) no compila ni aporta nada, porque el binario de
+# tienda lleva eframe sin AccessKit a propósito (ver arriba). Los tests de
+# lógica (temas, iconos, fechas) sí corren en Windows.
+egui_kittest = { version = "0.31", features = ["wgpu", "snapshot"] }

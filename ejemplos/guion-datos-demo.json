@@ -1,0 +1,182 @@
+{
+  "nombre": "Datos de demo para revisar pantallas",
+  "detener_al_fallar": true,
+  "pasos": [
+    {
+      "descripcion": "Entrar como admin",
+      "comando": { "Login": { "username": "admin", "pin": "1234" } }
+    },
+    {
+      "descripcion": "Abrir caja con $500",
+      "comando": { "AbrirCaja": { "fondo_cents": 50000 } }
+    },
+    {
+      "descripcion": "Dar de alta a María López",
+      "comando": {
+        "GuardarCliente": {
+          "cliente": {
+            "name": "María López",
+            "rfc": "MALO800101ABC",
+            "phone": "555 123 4567",
+            "email": "maria@ejemplo.mx",
+            "credit_limit_cents": 100000,
+            "regimen_fiscal": "612",
+            "codigo_postal": "06000",
+            "uso_cfdi": "G03"
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Venta 1: aceite en efectivo",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7507",
+                "descripcion": "Aceite 1-2-3 1 L",
+                "qty_millis": 1000,
+                "precio_cents": 4200,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              { "metodo": "efectivo", "monto_cents": 4200, "recibido_cents": 5000 }
+            ],
+            "cliente_id": null,
+            "nota": "",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Venta 2: dos cocas con tarjeta",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7501",
+                "descripcion": "Coca-Cola 600 ml",
+                "qty_millis": 2000,
+                "precio_cents": 1800,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              { "metodo": "tarjeta", "monto_cents": 3600, "recibido_cents": 0 }
+            ],
+            "cliente_id": null,
+            "nota": "",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Venta 3: café por transferencia",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7509",
+                "descripcion": "Café soluble 100 g",
+                "qty_millis": 1000,
+                "precio_cents": 8900,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              { "metodo": "transferencia", "monto_cents": 8900, "recibido_cents": 0 }
+            ],
+            "cliente_id": null,
+            "nota": "",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Venta 4: arroz en efectivo",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7505",
+                "descripcion": "Arroz Morelos 1 kg",
+                "qty_millis": 3000,
+                "precio_cents": 2350,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              { "metodo": "efectivo", "monto_cents": 7050, "recibido_cents": 7050 }
+            ],
+            "cliente_id": null,
+            "nota": "",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Venta 5: a crédito de María",
+      "comando": {
+        "Cobrar": {
+          "venta": {
+            "lineas": [
+              {
+                "sku": "7513",
+                "descripcion": "Cerveza lata 355 ml",
+                "qty_millis": 1000,
+                "precio_cents": 2400,
+                "descuento_cents": 0
+              }
+            ],
+            "descuento_global_cents": 0,
+            "pagos": [
+              { "metodo": "credito", "monto_cents": 2400, "recibido_cents": 0 }
+            ],
+            "cliente_id": 1,
+            "nota": "Fiado de prueba",
+            "supervisor": null
+          }
+        }
+      }
+    },
+    {
+      "descripcion": "Retiro de caja para cambio",
+      "comando": {
+        "MovimientoCaja": {
+          "tipo": "retiro",
+          "monto_cents": 2000,
+          "motivo": "Retiro para cambio",
+          "supervisor": { "username": "admin", "pin": "1234" }
+        }
+      }
+    },
+    {
+      "descripcion": "Gasto de papelería",
+      "comando": {
+        "MovimientoCaja": {
+          "tipo": "gasto",
+          "monto_cents": 1500,
+          "motivo": "Papelería",
+          "supervisor": { "username": "admin", "pin": "1234" }
+        }
+      }
+    },
+    {
+      "descripcion": "Salir",
+      "comando": "Salir"
+    }
+  ]
+}

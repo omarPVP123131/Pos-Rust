@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<title>Manual del cajero — Punto de Venta 0.6.2</title>
+<style>
+  @page { size: A4 portrait; margin: 11mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "DejaVu Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.6pt; line-height: 1.28; color: #111; margin: 0;
+  }
+  h1 { font-size: 15pt; margin: 0 0 1mm; letter-spacing: -0.3pt; }
+  h2 { font-size: 10pt; margin: 0 0 2mm; color: #0b6b3a; border-bottom: 1.4pt solid #0b6b3a; padding-bottom: 1mm; }
+  h3 { font-size: 9pt; margin: 3mm 0 1mm; color: #0b6b3a; }
+  p, li { margin: 0 0 1.2mm; }
+  ul, ol { margin: 0 0 1.5mm; padding-left: 4mm; }
+  code, .tecla {
+    font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 8pt;
+    background: #eef3ef; border: 0.5pt solid #b9cfc1; border-radius: 2px;
+    padding: 0.4mm 1.2mm; white-space: nowrap;
+  }
+  table { border-collapse: collapse; width: 100%; margin: 0 0 2mm; font-size: 8.2pt; }
+  th, td { border: 0.4pt solid #c9d3cc; padding: 1mm 1.4mm; text-align: left; vertical-align: top; }
+  th { background: #eef3ef; font-weight: 600; }
+  .cabecera { display: flex; justify-content: space-between; align-items: flex-end;
+              border-bottom: 2.4pt solid #111; padding-bottom: 1.5mm; margin-bottom: 3mm; }
+  .cabecera .datos { text-align: right; font-size: 7.6pt; color: #555; }
+  .hoja { page-break-after: always; height: 262mm; }
+  .hoja:last-child { page-break-after: auto; }
+  .dos-col { column-count: 2; column-gap: 6mm; }
+  .paso { display: flex; gap: 2mm; margin-bottom: 2.2mm; break-inside: avoid; }
+  .num { flex: 0 0 5.2mm; height: 5.2mm; border-radius: 50%; background: #0b6b3a; color: #fff;
+         font-weight: 700; font-size: 8pt; display: flex; align-items: center; justify-content: center; }
+  .paso .txt { flex: 1; }
+  .nota { background: #fdf8e3; border-left: 2.2pt solid #d9b310; padding: 1.4mm 2mm; margin: 0 0 2.2mm; }
+  .alerta { background: #fdeceb; border-left: 2.2pt solid #c0392b; padding: 1.4mm 2mm; margin: 0 0 2.2mm; }
+  .ok { background: #eef6ef; border-left: 2.2pt solid #0b6b3a; padding: 1.4mm 2mm; margin: 0 0 2.2mm; }
+  .pie { border-top: 0.6pt solid #ccc; margin-top: 3mm; padding-top: 1.2mm;
+         font-size: 7.2pt; color: #666; display: flex; justify-content: space-between; }
+  .relleno { border-bottom: 0.6pt dashed #888; display: inline-block; min-width: 34mm; }
+  .sin-corte { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- ================================================ HOJA 1 ================================================ -->
+<div class="hoja">
+  <div class="cabecera">
+    <div>
+      <h1>Punto de Venta — Manual del Cajero</h1>
+      <div style="font-size:8.6pt;color:#555;">Versión 0.6.2. Día 1: cobrar, cortar, pedir mercancía, imprimir y respaldar. La hoja 2 es para cuando algo se sale.</div>
+    </div>
+    <div class="datos">
+      Tienda: <span class="relleno">&nbsp;</span><br>
+      Equipo: <span class="relleno">&nbsp;</span><br>
+      Soporte: <span class="relleno">&nbsp;</span>
+    </div>
+  </div>
+
+  <h2>Lo que haces todo el día</h2>
+
+  <div class="dos-col">
+    <div>
+      <div class="paso"><div class="num">1</div><div class="txt"><b>Entrar.</b> Elige tu nombre, escribe tu PIN de 4 a 8 dígitos y pulsa
+        <span class="tecla">Enter</span>. Si te equivocas tres veces, el usuario se bloquea: avísale al encargado.
+        De fábrica: <code>admin</code> / <code>1234</code> (administrador) y <code>ana</code> / <code>4321</code> (cajero).</div></div>
+
+      <div class="paso"><div class="num">2</div><div class="txt"><b>Abrir caja.</b> <span class="tecla">F9</span> →
+        <i>Abrir caja</i>. Escribe el fondo (con cuánto empiezas) y confirma. Sin caja abierta no se cobra: así el corte siempre cuadra.</div></div>
+
+      <div class="paso"><div class="num">3</div><div class="txt"><b>Agregar productos.</b> Pasa el código de barras
+        o escribe el nombre y pulsa <span class="tecla">Enter</span>. Si lleva muchas piezas, escribe la cantidad
+        (o pica <span class="tecla">6</span> / <span class="tecla">12</span> / <span class="tecla">24</span>,
+        o escribe <span class="tecla">12*</span> y <span class="tecla">Enter</span>)
+        <i>antes</i> de escanear. <span class="tecla">+</span> / <span class="tecla">−</span> suman de a uno al último del ticket.
+        El renglón muestra <b>cantidad × precio</b>. Si no aparece, da de alta en <span class="tecla">F3</span> (el cajero sí puede).</div></div>
+
+      <div class="paso"><div class="num">4</div><div class="txt"><b>Corregir antes de cobrar.</b>
+        En el ticket, el número del renglón se pica para escribir 12 de un golpe; <b>−</b> / <b>+</b> suman de uno.
+        El bote quita el renglón, la etiqueta cambia el precio. <span class="tecla">Supr</span> quita el último.
+        <b>Después de cobrar no se edita</b>: se hace una devolución (encargado).</div></div>
+
+      <div class="paso"><div class="num">5</div><div class="txt"><b>Cobrar.</b> <span class="tecla">F4</span> abre el cobro.
+        El total va arriba, grande. En efectivo, pica el billete ($20, $50, $100…) y el cambio sale solo.
+        <span class="tecla">Enter</span> o <span class="tecla">F4</span> confirma e imprime. Con tarjeta: <i>Cobrar con tarjeta</i>.
+        <span class="tecla">Esc</span> vuelve. Tras cobrar, el cursor queda listo para el siguiente cliente.</div></div>
+    </div>
+
+    <div>
+      <div class="paso"><div class="num">6</div><div class="txt"><b>Pago mixto.</b> Primero el efectivo, luego
+        <i>+ Agregar otro pago</i> para tarjeta o transferencia. No deja confirmar si falta dinero.</div></div>
+
+      <div class="paso"><div class="num">7</div><div class="txt"><b>Entregar el cambio.</b> Se calcula sobre lo que
+        <i>recibiste</i>, no sobre el total. Cuenta el dinero en la mano del cliente antes de cerrar el cajón.</div></div>
+
+      <div class="paso"><div class="num">8</div><div class="txt"><b>Devolver.</b> Lo hace el encargado:
+        <span class="tecla">F8</span> Reportes → últimas ventas → <b>devolver</b> junto al folio.
+        El producto regresa al anaquel. El cajero no entra a Reportes. Nunca borres una venta a mano.</div></div>
+
+      <div class="paso"><div class="num">9</div><div class="txt"><b>Cerrar el turno.</b> <span class="tecla">F9</span> →
+        <i>Corte de caja</i>. El cajero sí corta su caja. Cuenta por denominaciones y corta. Guarda el ticket del corte: es tu comprobante.
+        Si está marcado, al cortar se hace el respaldo solo.</div></div>
+    </div>
+  </div>
+
+  <h3>Quién ve qué (tres roles, fijos)</h3>
+  <table>
+    <tr><th style="width:32mm;">Rol</th><th>Pestañas</th><th>Puede</th></tr>
+    <tr><td><b>Cajero</b></td>
+        <td>Venta, Catálogo, Clientes, Caja</td>
+        <td>Cobrar, dar de alta un producto, cortar su caja. No entra a Configuración ni a usuarios.</td></tr>
+    <tr><td><b>Supervisor</b></td>
+        <td>+ Pedidos, Conteo, Reportes, Auditoría</td>
+        <td>Descuento, fiado, devolución, retiro, facturar, conteo. No cambia gente ni el RFC.</td></tr>
+    <tr><td><b>Administrador</b></td>
+        <td>+ Configuración (<span class="tecla">F10</span>)</td>
+        <td>Gente, LAN del celular, impresora, RFC, respaldos y actualizaciones.</td></tr>
+  </table>
+
+  <h3>Teclas que te ahorran tiempo</h3>
+  <table>
+    <tr>
+      <th style="width:20mm;">Tecla</th><th>Para qué</th>
+      <th style="width:20mm;">Tecla</th><th>Para qué</th>
+    </tr>
+    <tr><td><span class="tecla">F2</span></td><td>Venta (el cursor queda en la búsqueda)</td>
+        <td><span class="tecla">F8</span></td><td>Reportes (encargado): ventas, utilidad, devolver, reimprimir</td></tr>
+    <tr><td><span class="tecla">F3</span></td><td>Catálogo: alta y existencias. Pedidos: el encargado, desde aquí</td>
+        <td><span class="tecla">F9</span></td><td>Caja: abrir, corte, arqueo, retiros</td></tr>
+    <tr><td><span class="tecla">F4</span></td><td>Abrir el cobro; <span class="tecla">Enter</span> también confirma</td>
+        <td><span class="tecla">F10</span></td><td>Configuración — <b>sólo administrador</b> (gente, LAN, impresora)</td></tr>
+    <tr><td><span class="tecla">F5</span></td><td>Conteo físico (encargado)</td>
+        <td><span class="tecla">Esc</span></td><td>Cancelar / volver</td></tr>
+    <tr><td><span class="tecla">F6</span></td><td>Bitácora: quién hizo qué (encargado)</td>
+        <td><span class="tecla">Supr</span></td><td>Quitar el último producto del ticket</td></tr>
+    <tr><td><span class="tecla">F7</span></td><td>Clientes y cartera (fiados y abonos)</td>
+        <td><span class="tecla">Enter</span></td><td>Agregar; en cobro, confirmar. <span class="tecla">12*</span> = cantidad. <span class="tecla">+</span>/<span class="tecla">−</span> = último</td></tr>
+  </table>
+
+  <div class="ok"><b>Nada pide PIN a media venta.</b> Descuento, fiado, precio a mano, retiro y un corte que no cuadra
+    los hace quien está en sesión y quedan anotados (quién, qué y cuánto). El PIN es sólo para entrar.</div>
+
+  <div class="nota"><b>No depende del internet.</b> Si se cae la red, sigues vendiendo: todo vive en esta computadora.
+    Los tickets se imprimen al momento. La factura CFDI 4.0 se arma por carpetas (el encargado la deja lista en Configuración);
+    el programa no habla con un PAC por internet. El dueño puede vender y facturar desde el celular contra esta PC
+    (<code>pos --servir</code>; la dirección sale en Configuración → Celular en la LAN).</div>
+
+  <div class="alerta"><b>Lo único que no debes hacer:</b> apagar con el botón o desconectar con el programa abierto.
+    Si se va la luz, no pasa nada: al volver, la última venta quedó completa o no se guardó; nunca a medias.</div>
+
+  <h3>Señales en la pantalla</h3>
+  <table>
+    <tr><td style="width:52mm;"><b>Franja ámbar arriba de la búsqueda</b></td><td>Productos bajo mínimo. Avísale al encargado; no es un error.</td></tr>
+    <tr><td><b>«agotado» en la baldosa</b></td><td>Ese producto ya no se puede agregar. El + del ticket también se apaga.</td></tr>
+    <tr><td><b>«Caja cerrada: no se puede cobrar»</b></td><td>Nadie abrió el turno. Ve a <span class="tecla">F9</span> → Abrir caja.</td></tr>
+    <tr><td><b>Cambio en verde</b></td><td>Eso es lo que le entregas al cliente. Cuéntalo en la mano.</td></tr>
+  </table>
+
+  <div class="pie"><span>Punto de Venta 0.6.2 — Manual del cajero</span><span>Hoja 1 de 2</span></div>
+</div>
+
+<!-- ================================================ HOJA 2 ================================================ -->
+<div class="hoja">
+  <div class="cabecera">
+    <div><h1>Cuando algo se sale de lo normal</h1>
+      <div style="font-size:8.6pt;color:#555;">Si tienes duda, llama al encargado antes de inventar. Todo queda en la bitácora.</div></div>
+    <div class="datos">Encargado: <span class="relleno">&nbsp;</span><br>Teléfono: <span class="relleno">&nbsp;</span></div>
+  </div>
+
+  <div class="dos-col">
+    <div>
+      <h3>Cambiar un precio a mano</h3>
+      <p>En el renglón del ticket, pica la etiqueta. Escribe el precio nuevo. <b>No pide PIN</b>: queda anotado
+        quién lo cobró y a cuánto. El ticket lleva el importe real.</p>
+
+      <h3>Descuento y fiado</h3>
+      <p>En el ticket, abre <i>Descuento y fiado</i> (encargado). El descuento puede ser de la línea o de toda la venta.
+        Para fiar: elige al cliente (no «Público en general») y un pago a crédito. También queda anotado.
+        El fiado no pasa si se pasa del límite del cliente.</p>
+
+      <h3>Abonos a la cartera</h3>
+      <p><span class="tecla">F7</span> Clientes → el cliente → <i>Abonar</i>. Cada abono lleva fecha; el saldo se puede revisar.</p>
+
+      <h3>Reimprimir un ticket</h3>
+      <p><span class="tecla">F8</span> → escribe el folio (el de 6 dígitos) → reimprimir. El folio no se repite.</p>
+
+      <h3>Corte de caja y arqueo</h3>
+      <p><span class="tecla">F9</span> → <i>Corte</i>. Cuenta por denominación; arriba dice cuánto <b>debería</b>
+        haber. Si no cuadra, se cierra igual y la diferencia queda en la bitácora (quién y cuánto). No «arregles» el dinero a mano.</p>
+
+      <h3>Retiros de dinero</h3>
+      <p><span class="tecla">F9</span> → movimiento con motivo (gasto, cambio, pago). Si no lo registras, el corte no cuadra.
+        Retirar efectivo es del encargado.</p>
+
+      <h3>Impresora de tickets</h3>
+      <p>El administrador la deja en <span class="tecla">F10</span> → Impresora → <i>Detectar</i> → <i>Imprimir prueba</i>.
+        Mira acentos, la regla de números, el QR y el corte. En una terminal: <code>pos --impresoras</code> y
+        <code>pos --probar-impresion</code>. Si el ticket de prueba sale, esa impresora queda guardada.
+        No instales drivers ni CUPS.</p>
+
+      <h3>Gente que usa el programa</h3>
+      <p><span class="tecla">F10</span> → <i>Quién usa el programa</i> (sólo administrador). Tres roles, no se inventan.
+        «Persona nueva» va plegada; al editar se abre. No se puede dejar la tienda sin un administrador.
+        El PIN se cambia al editar a esa persona (vacío = no cambiar).</p>
+    </div>
+
+    <div>
+      <h3>Celular en la LAN</h3>
+      <p>El dueño vende y factura desde el teléfono contra esta PC. Arranca con
+        <code>pos --servir</code> (o <code>--headless</code>). El puerto (8080 de fábrica) y la dirección
+        <code>http://IP:puerto</code> salen en Configuración, debajo del negocio, en una sola franja.
+        En el celular: <code>python3 cliente_movil.py http://IP:puerto</code>
+        (va dentro del .deb y del AppImage). Es un cliente tonto: la lógica vive en la PC.</p>
+
+      <h3>Dar de alta un producto</h3>
+      <p><span class="tecla">F3</span>. SKU, nombre y precio. El cajero sí puede. Sin código de fábrica:
+        <i>Código propio</i> arma un EAN-13 e <i>Imprimir código</i> lo manda a la térmica.
+        El inventario no se edita en el lápiz.</p>
+
+      <h3>Pedidos a proveedor</h3>
+      <p><span class="tecla">F3</span> → <i>Abrir pedidos</i>. Alta del proveedor, armas el pedido
+        (SKU o barras, cantidad). Cuando llega la caja: escribe lo que llegó y <i>Recibir lo que llegó</i>
+        (también a medias). El anaquel sube solo. <i>Pedir lo bajo mínimo</i> mete lo que ya se está acabando.
+        El cajero no entra: lo hace el encargado y queda anotado quién recibió.</p>
+
+      <h3>Cargar muchos productos (CSV)</h3>
+      <p>Catálogo → <i>Importar</i>. Columnas <code>nombre</code> y <code>precio</code>.
+        Si el archivo viene raro, <i>Elegir columnas…</i>.</p>
+
+      <h3>Contar el inventario</h3>
+      <p><span class="tecla">F5</span> → empezar conteo. Escanea y escribe cuántas hay: si lo vuelves a escanear,
+        se queda el último número, no se suma. Se puede seguir vendiendo. <i>Cerrar y aplicar</i> ajusta el anaquel
+        y queda anotado quién lo hizo. Lo que nadie contó <b>no se pone en cero</b>.</p>
+
+      <h3>Respaldo</h3>
+      <p><span class="tecla">F10</span> → <i>Hacer respaldo ahora</i>. Cópialo a una USB al terminar el día.
+        Si está marcado «respaldar al cortar», se hace solo. <b>Es tu seguro</b> si se muere la computadora.</p>
+
+      <h3>Si algo falla</h3>
+      <table>
+        <tr><th style="width:34mm;">Pasa esto</th><th>Haz esto</th></tr>
+        <tr><td>El escáner no lee</td><td>Escribe el código y <span class="tecla">Enter</span>. Si ninguno lee, revisa el cable.</td></tr>
+        <tr><td>No imprime</td><td>¿Encendida y con papel? <span class="tecla">F10</span> → Detectar → Imprimir prueba. El ticket se reimprime por folio.</td></tr>
+        <tr><td>Dice «Falta permiso»</td><td>Cierra sesión y vuelve a entrar (grupos <code>lp</code> / <code>dialout</code>). O reinstala el .deb.</td></tr>
+        <tr><td>Dice que está ocupada</td><td>Cierra CUPS o el driver del fabricante. Este programa no los necesita.</td></tr>
+        <tr><td>Acentos raros / ticket a medias</td><td>Cambia el modelo o baja los baudios a 9600 en Configuración.</td></tr>
+        <tr><td>El cajón no abre</td><td>El cable RJ11 va en la impresora. <i>Probar cajón</i> en Configuración; prueba el otro pin.</td></tr>
+        <tr><td>Se trabó la pantalla</td><td><span class="tecla">Esc</span>. Si no responde, llama al encargado.</td></tr>
+        <tr><td>Se fue la luz</td><td>Abre el programa. La última venta está completa o no está. Revisa <span class="tecla">F8</span>.</td></tr>
+        <tr><td>El PIN no entra</td><td>No insistas: a los tres se bloquea. Que el administrador lo desbloquee.</td></tr>
+        <tr><td>El corte no cuadra</td><td>Revisa retiros y abonos. Cierra igual: la diferencia queda anotada.</td></tr>
+        <tr><td>No abre después de actualizar</td><td><code>pos --revertir</code> vuelve al programa de antes. Llama al encargado.</td></tr>
+      </table>
+
+      <div class="alerta" style="margin-top:1mm;"><b>Regla de oro:</b> el dinero del cajón es el de los tickets.
+        Si sobra o falta, se reporta al corte — no se arregla solo.</div>
+    </div>
+  </div>
+
+  <div class="pie"><span>Punto de Venta 0.6.2 — Manual del cajero</span><span>Hoja 2 de 2</span></div>
+</div>
+
+</body>
+</html>

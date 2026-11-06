@@ -1,0 +1,22 @@
+#!/bin/sh
+# AppImage: corre sin instalar y sin ser root. Los datos quedan junto al
+# ejecutable si hay una carpeta portable, si no en el HOME del usuario.
+#
+# No puede dejar reglas udev: si `pos --impresoras` dice "Falta permiso",
+# instala el .deb una vez o corre:
+#   sudo usermod -aG lp,dialout $USER
+# y cierra sesión.
+AQUI="$(dirname "$(readlink -f "$0")")"
+export PATH="$AQUI/usr/bin:$PATH"
+export LD_LIBRARY_PATH="$AQUI/usr/lib:${LD_LIBRARY_PATH}"
+
+# Modo portable: si junto al AppImage hay una carpeta "pos-datos", la usa.
+# Así se puede llevar el punto de venta en una memoria USB con su base.
+if [ -d "$AQUI/pos-datos" ]; then
+    export POS_DB="$AQUI/pos-datos/tienda.db"
+else
+    export POS_DB="${POS_DB:-$HOME/.local/share/punto-de-venta/tienda.db}"
+    mkdir -p "$(dirname "$POS_DB")" 2>/dev/null || true
+fi
+
+exec "$AQUI/usr/bin/pos" "$@"

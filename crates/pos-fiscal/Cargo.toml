@@ -1,0 +1,10 @@
+[package]
+name = "pos-fiscal"
+version = "0.1.0"
+edition = "2021"
+description = "CFDI 4.0: armado de comprobantes y timbrado por carpetas (sin HTTP)"
+license = "MIT"
+
+# Sin cliente HTTP a propósito: el timbrado sale por carpetas. No añadir
+# ureq, reqwest ni hyper aquí.
+[dependencies]
